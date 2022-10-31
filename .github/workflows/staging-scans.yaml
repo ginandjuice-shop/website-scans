@@ -6,7 +6,7 @@ on:
   - cron: '30 11 * * *'
 
 jobs:
-  scan:
+  scan-container:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -17,7 +17,7 @@ jobs:
           appPort: 3000   
     steps:
     - name: Start ${{ matrix.containers.name }} Container
-      run: docker run --rm -p 8080:${{ matrix.containers.appPort }} ${{ matrix.containers.image }}
+      run: docker run --detach --rm --publish 8080:${{ matrix.containers.appPort }} --name container ${{ matrix.containers.image }}
     - name: Scan Site
       uses: PortSwigger/dastardly-github-action@main
       with:
