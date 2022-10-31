@@ -17,10 +17,10 @@ jobs:
           appPort: 3000
         - name: DVNA 
           image: appsecco/dvna:sqlite
-          port: 9090
+          appPort: 9090
         - name: BodgeIt Store
           image: owaspvwad/bodgeit
-          port: 8080
+          appPort: 8080
     steps:
     - name: Get Runner IP Address
       id: runnerIp
