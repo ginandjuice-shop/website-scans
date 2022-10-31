@@ -26,3 +26,4 @@ jobs:
         check_name: scan results (${{ matrix.sites }})
         report_paths: '**/dastardly-report.xml'
         require_tests: true
+        detailed_summary: true
