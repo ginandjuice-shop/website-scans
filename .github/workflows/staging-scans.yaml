@@ -18,7 +18,7 @@ jobs:
     steps:
     - name: Get Runner IP Address
       id: runnerIp
-      run: echo ::set-output name=address::$(ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
+      run: echo address=$(ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1) >> $GITHUB_OUTPUT
     - name: Start ${{ matrix.containers.name }} Container
       run: docker run --detach --publish 31337:${{ matrix.containers.appPort }} --name container ${{ matrix.containers.image }}
     - name: Scan Site
