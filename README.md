@@ -2,7 +2,7 @@
 # website-scans
 Example demonstrating scanning multiple websites with [PortSwigger's Dastardly Action](https://github.com/PortSwigger/dastardly-github-action) on a schedule and manually.
 
-> :warning: **If using in a public repo:**: You may publicise vulnerabilities for all to see!
+> :warning: **If using in a public repo:**: You may publicise vulnerabilities for all to see (although, they're already there...)!
 
 See: [.github/workflows/website-scans.yaml](https://github.com/ginandjuice-shop/website-scans/blob/main/.github/workflows/website-scans.yaml)
 
