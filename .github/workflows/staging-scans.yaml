@@ -14,7 +14,13 @@ jobs:
         containers:
         - name: OWASP Juice Shop
           image: bkimminich/juice-shop
-          appPort: 3000   
+          appPort: 3000
+        - name: DVNA 
+          image: appsecco/dvna:sqlite
+          port: 9090
+        - name: BodgeIt Store
+          image: owaspvwad/bodgeit
+          port: 8080
     steps:
     - name: Get Runner IP Address
       id: runnerIp
