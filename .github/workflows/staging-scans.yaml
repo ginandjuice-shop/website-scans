@@ -16,15 +16,15 @@ jobs:
           image: bkimminich/juice-shop
           appPort: 3000   
     steps:
-    - name: Get Runner Host IP
-      id: hostIp
-      run: ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1
+    - name: Get Runner IP Address
+      id: runnerIp
+      run: echo ::set-output name=address::$(ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
     - name: Start ${{ matrix.containers.name }} Container
-      run: docker run --detach --publish 8080:${{ matrix.containers.appPort }} --name container ${{ matrix.containers.image }}
+      run: docker run --detach --publish 31337:${{ matrix.containers.appPort }} --name container ${{ matrix.containers.image }}
     - name: Scan Site
       uses: PortSwigger/dastardly-github-action@main
       with:
-        target-url: http://localhost:8080
+        target-url: http://${{ steps.runnerIp.outputs.address }}:31337
     - name: Process Report
       if: always()
       uses: mikepenz/action-junit-report@v3
