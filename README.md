@@ -7,7 +7,7 @@ Example demonstrating scanning multiple websites with [PortSwigger's Dastardly A
 
 See:
 - [.github/workflows/website-scans.yaml](https://github.com/ginandjuice-shop/website-scans/blob/main/.github/workflows/website-scans.yaml) for an example of how to scan multiple websites.
-- [.github/workflows/staging-image-scans.yaml](https://github.com/ginandjuice-shop/website-scans/blob/main/.github/workflows/staging-image-scans.yaml) for an example of how to scan images containing web applications.
+- [.github/workflows/staging-scans.yaml](https://github.com/ginandjuice-shop/website-scans/blob/main/.github/workflows/staging-scans.yaml) for an example of how to scan images containing web applications.
 
 
 Dastdardly creates a Junit report which, when parsed gives you feedback on the GitHub Workflow:
