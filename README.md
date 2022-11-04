@@ -1,4 +1,5 @@
 [![Website Scans](https://github.com/ginandjuice-shop/website-scans/actions/workflows/website-scans.yaml/badge.svg?branch=main)](https://github.com/ginandjuice-shop/website-scans/actions/workflows/website-scans.yaml)
+[![Staging Image Scans](https://github.com/ginandjuice-shop/website-scans/actions/workflows/staging-scans.yaml/badge.svg?branch=main)](https://github.com/ginandjuice-shop/website-scans/actions/workflows/staging-scans.yaml)
 # website-scans
 Example demonstrating scanning multiple websites with [PortSwigger's Dastardly Action](https://github.com/PortSwigger/dastardly-github-action) on a schedule and manually.
 
