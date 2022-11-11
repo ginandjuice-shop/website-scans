@@ -4,17 +4,21 @@ on:
   workflow_dispatch: {}
   schedule:
   - cron: '30 11 * * *'
-  
-env:
-  sites: '["https://ginandjuice.shop/", "https://portswigger-labs.net/", "https://brokencrystals.com/"]'
 
 jobs:
+  target-list:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        run: echo 'matrix=["https://ginandjuice.shop/", "https://portswigger-labs.net/", "https://brokencrystals.com/"]' >> $GITHUB_OUTPUT
   dastardly-scan:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        sites: ${{ fromJSON(env.sites) }}
+        sites: ${{ fromJSON(needs.target-list.outputs.matrix) }}
     steps:
     - name: Dastardly Scan
       uses: PortSwigger/dastardly-github-action@main
