@@ -12,12 +12,13 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - id: set-matrix
-        run: echo "matrix={\"sites\":[\"https://ginandjuice.shop/\", \"https://portswigger-labs.net/\", \"https://brokencrystals.com/\"]}" >> $GITHUB_OUTPUT
+        run: echo "matrix=[\"https://ginandjuice.shop/\", \"https://portswigger-labs.net/\", \"https://brokencrystals.com/\"]" >> $GITHUB_OUTPUT
   dastardly-scan:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix: ${{ fromJSON(needs.target-list.outputs.matrix) }}
+      matrix:
+        sites: ${{ fromJSON(needs.target-list.outputs.matrix) }}
     steps:
     - name: Dastardly Scan
       uses: PortSwigger/dastardly-github-action@main
@@ -35,7 +36,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix: ${{ fromJSON(needs.target-list.outputs.matrix) }}
+      matrix:
+        sites: ${{ fromJSON(needs.target-list.outputs.matrix) }}
     steps:
     - name: Nuclei Scan
       uses: projectdiscovery/nuclei-action@main
@@ -46,7 +48,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix: ${{ fromJSON(needs.target-list.outputs.matrix) }}
+      matrix:
+        sites: ${{ fromJSON(needs.target-list.outputs.matrix) }}
     steps:
     - name: ZAP Scan
       uses: zaproxy/action-full-scan@v0.4.0
