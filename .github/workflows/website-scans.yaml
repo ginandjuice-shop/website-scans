@@ -37,10 +37,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sites:
-        - https://ginandjuice.shop/
-        - https://portswigger-labs.net/
-        - https://brokencrystals.com/
+        sites: ${{ fromJSON(needs.target-list.outputs.matrix) }}
     steps:
     - name: Nuclei Scan
       uses: projectdiscovery/nuclei-action@main
@@ -52,10 +49,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sites:
-        - https://ginandjuice.shop/
-        - https://portswigger-labs.net/
-        - https://brokencrystals.com/
+        sites: ${{ fromJSON(needs.target-list.outputs.matrix) }}
     steps:
     - name: ZAP Scan
       uses: zaproxy/action-full-scan@v0.4.0
