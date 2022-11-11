@@ -59,3 +59,4 @@ jobs:
       with:
         target: ${{ matrix.sites }}
         allow_issue_writing: false
+        fail_action: true
