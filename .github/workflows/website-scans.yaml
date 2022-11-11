@@ -13,13 +13,13 @@ jobs:
     steps:
       - id: set-matrix
         run: echo "matrix=[\"https://ginandjuice.shop/\", \"https://portswigger-labs.net/\", \"https://brokencrystals.com/\"]" >> $GITHUB_OUTPUT
-      - run: echo ${{ steps.set-matrix.outputs.matrix }}
+      - run: echo ${{ fromJson(steps.set-matrix.outputs.matrix) }}
   dastardly-scan:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        sites: ${{ fromJSON(needs.target-list.outputs.matrix) }}
+        sites: ${{ fromJson(needs.target-list.outputs.matrix) }}
     steps:
     - name: Dastardly Scan
       uses: PortSwigger/dastardly-github-action@main
