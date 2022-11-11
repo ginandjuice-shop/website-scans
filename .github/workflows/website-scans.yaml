@@ -12,7 +12,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - id: set-matrix
-        run: echo 'matrix={"sites":["https://ginandjuice.shop/", "https://portswigger-labs.net/", "https://brokencrystals.com/"]}' >> $GITHUB_OUTPUT
+        run: echo "matrix={\"sites\":[\"https://ginandjuice.shop/\", \"https://portswigger-labs.net/\", \"https://brokencrystals.com/\"]}" >> $GITHUB_OUTPUT
   dastardly-scan:
     runs-on: ubuntu-latest
     strategy:
