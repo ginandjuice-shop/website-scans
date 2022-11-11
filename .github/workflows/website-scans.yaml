@@ -4,19 +4,19 @@ on:
   workflow_dispatch: {}
   schedule:
   - cron: '30 11 * * *'
+  
+env:
+  sites: '["https://ginandjuice.shop/", "https://portswigger-labs.net/", "https://brokencrystals.com/"]'
 
 jobs:
-  scan:
+  dastardly-scan:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        sites:
-        - https://ginandjuice.shop/
-        - https://portswigger-labs.net/
-        - https://brokencrystals.com/
+        sites: ${{ fromJSON(env.sites) }}
     steps:
-    - name: Scan Site
+    - name: Dastardly Scan
       uses: PortSwigger/dastardly-github-action@main
       with:
         target-url: ${{ matrix.sites }}
@@ -28,3 +28,33 @@ jobs:
         report_paths: '**/dastardly-report.xml'
         require_tests: true
         detailed_summary: true
+  nuclei-scan:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        sites:
+        - https://ginandjuice.shop/
+        - https://portswigger-labs.net/
+        - https://brokencrystals.com/
+    steps:
+    - name: Nuclei Scan
+      uses: projectdiscovery/nuclei-action@main
+      with:
+        target: ${{ matrix.sites }}
+        flags: "-severity critical,high,medium -stats"
+  zap-scan:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        sites:
+        - https://ginandjuice.shop/
+        - https://portswigger-labs.net/
+        - https://brokencrystals.com/
+    steps:
+    - name: ZAP Scan
+      uses: zaproxy/action-full-scan@v0.4.0
+      with:
+        target: ${{ matrix.sites }}
+        allow_issue_writing: false
