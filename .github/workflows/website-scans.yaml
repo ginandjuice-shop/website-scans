@@ -6,17 +6,28 @@ on:
   - cron: '30 11 * * *'
 
 jobs:
-  scan:
+  target-list:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        run: >-
+          echo 'matrix=[
+          "https://ginandjuice.shop/",
+          "https://portswigger-labs.net/",
+          "https://brokencrystals.com/",
+          "https://www.reloadin5.com"
+          ]' >> $GITHUB_OUTPUT
+  dastardly-scan:
+    needs: target-list
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        sites:
-        - https://ginandjuice.shop/
-        - https://portswigger-labs.net/
-        - https://brokencrystals.com/
+        sites: ${{ fromJson(needs.target-list.outputs.matrix) }}
     steps:
-    - name: Scan Site
+    - name: Dastardly Scan
       uses: PortSwigger/dastardly-github-action@main
       with:
         target-url: ${{ matrix.sites }}
@@ -28,3 +39,30 @@ jobs:
         report_paths: '**/dastardly-report.xml'
         require_tests: true
         detailed_summary: true
+  nuclei-scan:
+    needs: target-list
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        sites: ${{ fromJson(needs.target-list.outputs.matrix) }}
+    steps:
+    - name: Nuclei Scan
+      uses: projectdiscovery/nuclei-action@main
+      with:
+        target: ${{ matrix.sites }}
+        flags: "-severity critical,high,medium -stats"
+  zap-scan:
+    needs: target-list
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        sites: ${{ fromJson(needs.target-list.outputs.matrix) }}
+    steps:
+    - name: ZAP Scan
+      uses: zaproxy/action-full-scan@v0.4.0
+      with:
+        target: ${{ matrix.sites }}
+        allow_issue_writing: false
+        fail_action: true
