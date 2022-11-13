@@ -14,10 +14,11 @@ jobs:
       - id: set-matrix
         run: >-
           echo 'matrix=[
-            "https://ginandjuice.shop/",
-            "https://portswigger-labs.net/",
-            "https://brokencrystals.com/",
-            "https://www.reloadin5.com"]' >> $GITHUB_OUTPUT
+          "https://ginandjuice.shop/",
+          "https://portswigger-labs.net/",
+          "https://brokencrystals.com/",
+          "https://www.reloadin5.com"
+          ]' >> $GITHUB_OUTPUT
   dastardly-scan:
     needs: target-list
     runs-on: ubuntu-latest
