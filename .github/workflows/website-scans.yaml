@@ -84,3 +84,22 @@ jobs:
       with:
         name: ${{ steps.logfile.outputs.name }}
         path: report_*
+  nikto-scan:
+    needs: target-list
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        sites: ${{ fromJson(needs.target-list.outputs.matrix) }}
+    steps:
+    - name: Log File Name
+      id: logfile
+      run: echo name=$(echo ${{ matrix.sites }} | sed 's/\//_/g; s/:/_/g; s/\./_/g')_nikto >> $GITHUB_OUTPUT
+    - name: Nikto Scan
+      run: docker run --rm -v $(pwd):/tmp sullo/nikto -h ${{ matrix.sites }} -o /tmp/out.txt
+    - name: Upload nikto report
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ steps.logfile.outputs.name }}
+        path: out.txt
