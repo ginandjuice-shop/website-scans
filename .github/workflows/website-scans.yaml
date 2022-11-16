@@ -59,7 +59,7 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ steps.logfile.outputs.name }}.log
+        name: ${{ steps.logfile.outputs.name }}
         path: nuclei.log
   zap-scan:
     needs: target-list
@@ -82,5 +82,5 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ steps.logfile.outputs.name }}.zip
-        path: zap_scan.zip
+        name: ${{ steps.logfile.outputs.name }}
+        path: report_*
