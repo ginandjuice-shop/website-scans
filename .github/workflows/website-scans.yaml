@@ -96,7 +96,11 @@ jobs:
       id: logfile
       run: echo name=$(echo ${{ matrix.sites }} | sed 's/\//_/g; s/:/_/g; s/\./_/g')_nikto >> $GITHUB_OUTPUT
     - name: Nikto Scan
-      run: docker run --rm -v $(pwd):/tmp sullo/nikto -h ${{ matrix.sites }} -o /tmp/out.txt
+      run: |
+        git clone https://github.com/sullo/nikto.git
+        cd nikto
+        docker build -t sullo/nikto .
+        docker run --rm -v $(pwd):/tmp sullo/nikto -h ${{ matrix.sites }} -o /tmp/out.txt
     - name: Upload nikto report
       if: always()
       uses: actions/upload-artifact@v3
