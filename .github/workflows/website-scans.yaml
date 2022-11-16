@@ -47,11 +47,19 @@ jobs:
       matrix:
         sites: ${{ fromJson(needs.target-list.outputs.matrix) }}
     steps:
+    - name: Log File Name
+      id: logfile
+      run: echo name=$(echo ${{ matrix.sites }} | sed 's/\//_/g; s/:/_/g; s/\./_/g')_nuclei >> $GITHUB_OUTPUT
     - name: Nuclei Scan
       uses: projectdiscovery/nuclei-action@main
       with:
         target: ${{ matrix.sites }}
         flags: "-severity critical,high,medium -stats"
+    - name: Upload nuclei log
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.logfile.outputs.name }}.zip
+          path: nuclei.log
   zap-scan:
     needs: target-list
     runs-on: ubuntu-latest
@@ -60,9 +68,17 @@ jobs:
       matrix:
         sites: ${{ fromJson(needs.target-list.outputs.matrix) }}
     steps:
+    - name: Log File Name
+      id: logfile
+      run: echo name=$(echo ${{ matrix.sites }} | sed 's/\//_/g; s/:/_/g; s/\./_/g')_zap >> $GITHUB_OUTPUT
     - name: ZAP Scan
       uses: zaproxy/action-full-scan@v0.4.0
       with:
         target: ${{ matrix.sites }}
         allow_issue_writing: false
         fail_action: true
+    - name: Upload zap report
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.logfile.outputs.name }}.zip
+          path: zap_scan.zip
