@@ -54,7 +54,7 @@ jobs:
       uses: projectdiscovery/nuclei-action@main
       with:
         target: ${{ matrix.sites }}
-        flags: "-severity critical,high,medium -stats"
+        flags: "-severity critical,high,medium -stats -headless"
     - name: Upload nuclei log
       if: always()
       uses: actions/upload-artifact@v3
