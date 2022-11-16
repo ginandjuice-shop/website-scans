@@ -56,10 +56,10 @@ jobs:
         target: ${{ matrix.sites }}
         flags: "-severity critical,high,medium -stats"
     - name: Upload nuclei log
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ steps.logfile.outputs.name }}.zip
-          path: nuclei.log
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ steps.logfile.outputs.name }}.log
+        path: nuclei.log
   zap-scan:
     needs: target-list
     runs-on: ubuntu-latest
@@ -78,7 +78,7 @@ jobs:
         allow_issue_writing: false
         fail_action: true
     - name: Upload zap report
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ steps.logfile.outputs.name }}.zip
-          path: zap_scan.zip
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ steps.logfile.outputs.name }}.zip
+        path: zap_scan.zip
