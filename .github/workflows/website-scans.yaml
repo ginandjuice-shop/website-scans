@@ -56,6 +56,7 @@ jobs:
         target: ${{ matrix.sites }}
         flags: "-severity critical,high,medium -stats"
     - name: Upload nuclei log
+      if: always()
       uses: actions/upload-artifact@v3
       with:
         name: ${{ steps.logfile.outputs.name }}.log
@@ -78,6 +79,7 @@ jobs:
         allow_issue_writing: false
         fail_action: true
     - name: Upload zap report
+      if: always()
       uses: actions/upload-artifact@v3
       with:
         name: ${{ steps.logfile.outputs.name }}.zip
