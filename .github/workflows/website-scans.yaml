@@ -100,10 +100,12 @@ jobs:
         git clone https://github.com/sullo/nikto.git
         cd nikto
         docker build -t sullo/nikto .
-        docker run --rm -v $(pwd):/tmp sullo/nikto -h ${{ matrix.sites }} -o /tmp/out.txt
+        mkdir out
+        chmod a+w out
+        docker run --rm -v ${GITHUB_WORKSPACE}:/tmp sullo/nikto -h ${{ matrix.sites }} -o /tmp/out/report.txt
     - name: Upload nikto report
       if: always()
       uses: actions/upload-artifact@v3
       with:
         name: ${{ steps.logfile.outputs.name }}
-        path: out.txt
+        path: out/report.txt
