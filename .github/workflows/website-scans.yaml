@@ -17,7 +17,8 @@ jobs:
           "https://ginandjuice.shop/",
           "https://portswigger-labs.net/",
           "https://brokencrystals.com/",
-          "https://www.reloadin5.com"
+          "https://www.reloadin5.com",
+          "https://appple.portswigger-dev.cloud"
           ]' >> $GITHUB_OUTPUT
   dastardly-scan:
     needs: target-list
